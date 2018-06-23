@@ -1,11 +1,15 @@
-var topics = ['doug bradley', 'robert englund', 'bela lugosi', ]
+var topics = ['doug bradley', 
+            'robert englund', 
+            'bela lugosi', 
+            'vincent price', 
+            'boris karloff' ]
 
 //create a function that creates new buttons dynamically based on each item in the array
    // Function for displaying topics data
    function renderButtons() {
 
         $("#topics-view").empty();
-    
+
             // for loop for the array
             for (var i = 0; i < topics.length; i++) {
 
@@ -22,7 +26,7 @@ var topics = ['doug bradley', 'robert englund', 'bela lugosi', ]
     }
   }
 
-//grab gif data from giphy to populate gifs on button clicks
+//grab gif data from giphy to populate gifs on button clicks with Ajax call
 //gifs should have ratings displayed
 $("button").on("click", function() {
       var person = $(this).attr("data-name");
@@ -53,6 +57,20 @@ $("button").on("click", function() {
           }
         });
     });
+
+    // This function handles events where one button is clicked
+    $("#add-gif").on("click", function(event) {
+        // event.preventDefault() prevents the form from trying to submit itself.
+        event.preventDefault();
+
+        // This line will grab the text from the input box
+        var topic = $("#gif-input").val().trim();
+        // The input from the textbox is then added to our array
+        topics.push(topic);
+
+        // calling renderButtons which handles the processing of our movie array
+        renderButtons();
+      });
 
     //create a function that pauses/unpauses gif animation
     //run all functions
