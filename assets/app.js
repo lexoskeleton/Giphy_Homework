@@ -19,6 +19,8 @@ var topics = ['doug bradley',
             a.addClass("topic");
             // Adding a data-attribute with a value of the topic at index i
             a.attr("data-topic", topics[i]);
+            //Adding data-state attribute to rendered gifs
+            a.attr("data-state", "still");
             // Providing the button's text with a value of the topic at index i
             a.text(topics[i]);
             // Adding the button to the HTML
@@ -28,7 +30,7 @@ var topics = ['doug bradley',
 
     //grab gif data from giphy to populate gifs on button clicks with Ajax call
     //gifs should have ratings displayed
-    $(".topic").on("click", function() {
+    $(document).on("click",  ".topic", function() {
         var person = $(this).attr("data-name");
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
              person + "&api_key=dc6zaTOxFJmzC&limit=10";
@@ -59,7 +61,7 @@ var topics = ['doug bradley',
     });
 
     // This function handles events where one button is clicked
-    $("#add-gif").on("click", function(event) {
+    $("#add-gif").on("click", function() {
         // event.preventDefault() prevents the form from trying to submit itself.
         event.preventDefault();
 
@@ -72,13 +74,24 @@ var topics = ['doug bradley',
         renderButtons();
       });
 
-      renderButtons();
+     
 
     //create a function that pauses/unpauses gif animation
+    $(".topic").on("click", function() {
+        // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+        var state = $(this).attr("data-state");
+        if (state === "still") {
+          $(this).attr("src", $(this).attr("data-animate"));
+          $(this).attr("data-state", "animate");
+        } else {
+          $(this).attr("src", $(this).attr("data-still"));
+          $(this).attr("data-state", "still");
+        }
+      });
 
     
-    
     //run all functions
+    renderButtons();
 
 
 
